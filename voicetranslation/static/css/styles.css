@@ -1,0 +1,130 @@
+/* Common styles for all interfaces */
+:root {
+    --transition-speed: 0.3s;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Microphone button styles */
+.microphone-container {
+    text-align: center;
+}
+
+#microphone-btn {
+    transition: all var(--transition-speed) ease;
+}
+
+#microphone-btn:hover {
+    transform: scale(1.05);
+}
+
+#microphone-btn.active {
+    background-color: var(--bs-danger);
+    color: white;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Status indicators */
+.connection-status {
+    display: flex;
+    align-items: center;
+}
+
+#status-indicator.online {
+    background-color: var(--bs-success);
+}
+
+#status-indicator.offline {
+    background-color: var(--bs-secondary);
+}
+
+#listening-status.active {
+    background-color: var(--bs-danger);
+}
+
+/* Translation output */
+#translation-output {
+    transition: background-color var(--transition-speed) ease;
+}
+
+/* Progress bar animation */
+@keyframes progress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+.progress-active {
+    animation: progress 5s linear;
+}
+
+/* System message styles */
+.system-messages-container {
+    transition: all var(--transition-speed) ease;
+}
+
+/* Hide scroll bars for kiosk mode */
+.kiosk-mode {
+    overflow: hidden;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    .btn {
+        padding: 0.25rem 0.5rem;
+    }
+    
+    .card-header {
+        padding: 0.5rem;
+    }
+    
+    .card-body {
+        padding: 0.75rem;
+    }
+}
+
+/* Feather icon size for mobile */
+.feather-small {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+/* Language selection styles */
+.language-item {
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.language-item:hover {
+    background-color: rgba(var(--bs-info-rgb), 0.1);
+}
+
+.language-item.active {
+    background-color: rgba(var(--bs-primary-rgb), 0.2);
+    font-weight: bold;
+}
+
+/* Mode selection styles */
+.mode-selector .btn-check:checked + .btn {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: var(--bs-light);
+}

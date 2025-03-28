@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Multilingual Translation - Mobile</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+    <div class="container-fluid vh-100 d-flex flex-column">
+        <header class="py-2">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1 class="h5 mb-0">Multilingual Translator</h1>
+                    <div class="connection-status">
+                        <span id="status-indicator" class="badge bg-secondary">Offline</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-grow-1 d-flex flex-column">
+            <div class="container-fluid h-100 d-flex flex-column px-2">
+                <!-- Mode Selection -->
+                <div class="mode-selector mb-2">
+                    <div class="btn-group w-100" role="group" aria-label="Mode Selection">
+                        <input type="radio" class="btn-check" name="mode" id="translation-mode" autocomplete="off" checked>
+                        <label class="btn btn-sm btn-outline-primary" for="translation-mode">Translation</label>
+                        
+                        <input type="radio" class="btn-check" name="mode" id="assistant-mode" autocomplete="off">
+                        <label class="btn btn-sm btn-outline-primary" for="assistant-mode">Assistant</label>
+                    </div>
+                </div>
+
+                <!-- Language Selection -->
+                <div class="language-selection mb-2">
+                    <div class="row g-1">
+                        <div class="col-6">
+                            <select class="form-select form-select-sm" id="input-language">
+                                <option value="auto">Auto Detect</option>
+                                <option value="en">English</option>
+                                <option value="tl">Filipino</option>
+                                <option value="ko">Korean</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <select class="form-select form-select-sm" id="output-language">
+                                <option value="en">English</option>
+                                <option value="tl">Filipino</option>
+                                <option value="ko">Korean</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Voice Input -->
+                <div class="voice-input-container mb-2">
+                    <div class="card">
+                        <div class="card-header py-2 d-flex justify-content-between align-items-center">
+                            <small>Voice Input</small>
+                            <span id="listening-status" class="badge bg-secondary">Not Listening</span>
+                        </div>
+                        <div class="card-body py-2">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="microphone-container mb-2">
+                                    <button id="microphone-btn" class="btn btn-outline-danger rounded-circle p-3">
+                                        <i data-feather="mic"></i>
+                                    </button>
+                                </div>
+                                <div class="transcript-container w-100">
+                                    <textarea id="transcript" class="form-control form-control-sm" rows="2" readonly placeholder="Your speech will appear here..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Translation Output -->
+                <div class="translation-output-container mb-2 flex-grow-1">
+                    <div class="card h-100">
+                        <div class="card-header py-2 d-flex justify-content-between align-items-center">
+                            <small id="output-header">Translation Output</small>
+                            <button id="speak-btn" class="btn btn-sm btn-outline-info py-0">
+                                <i data-feather="volume-2" class="feather-small"></i>
+                            </button>
+                        </div>
+                        <div class="card-body py-2 d-flex flex-column">
+                            <div id="translation-output" class="flex-grow-1 mb-2">
+                                <p class="text-muted small">Translation will appear here...</p>
+                            </div>
+                            <div class="progress" style="height: 3px;">
+                                <div id="progress-bar" class="progress-bar bg-info" role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Messages -->
+                <div class="system-messages-container">
+                    <div class="alert alert-info py-1 px-2" role="alert" id="system-message">
+                        <small>Tap microphone to speak</small>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="py-1 bg-dark">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted" style="font-size: 0.7rem;">Multilingual Translation</small>
+                    <small class="text-muted" style="font-size: 0.7rem;">EN | TL | KO</small>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/detector.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/translator.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/voiceRecognition.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/tts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    
+    <script>
+        // Initialize Feather icons with small size for mobile
+        feather.replace({ width: 16, height: 16 });
+        
+        // Additional mobile-specific scripts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Prevent zoom on double tap
+            document.addEventListener('touchend', function(event) {
+                if (event.touches.length > 1) {
+                    event.preventDefault();
+                }
+            }, { passive: false });
+        });
+    </script>
+</body>
+</html>

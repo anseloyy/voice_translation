@@ -1,0 +1,52 @@
+
+Multilingual Voice-to-Text & Translation System with AI Assistant Framework**  
+Supports **Filipino, English, and Korean** for **Mobile (Web-based)** and **Kiosk Mode (Raspberry Pi 5)** with offline-first functionality.  
+
+Implemented Features:
+
+1. Two Modes:**  
+✅ **Translation Mode:**  
+- Converts spoken language into text and translates it.  
+- Reads translated text aloud using **Piper TTS**.  
+
+✅ **Assistant Mode (Framework Only, No AI Yet):**  
+- Placeholder for AI assistant.  
+- **Only language selection and microphone input work** (no AI responses yet).  
+
+2. Speech-to-Text (STT):**  
+✅ Uses **Vosk** for offline voice recognition (Filipino, English, Korean).  
+
+3. Language Detection & Translation:**  
+✅ Auto-detects spoken language with **FastText**.  
+✅ Translates using **ArgosTranslate/LibreTranslate** (offline) or **Google Translate** (online).  
+:No Direct tl to ko and ko to tl just make it work doing your thing.
+
+4. Text-to-Speech (TTS):
+✅ Reads translated text aloud using **Piper TTS** (offline).  
+
+#### **5. User Interaction (Kiosk Mode - Raspberry Pi 5):**  
+✅ **Physical Buttons (GPIO use gpiozero):**  
+   - **2 Language Selection Button (Input and Output):** Cycles through **Filipino → English → Korean**.  
+   - **Microphone Button:** Starts voice recognition.  
+   - **Mode Selection Button:** Switches between **Translation Mode** and **Assistant Mode**.  
+   - **Process Button:**  
+     - In **Translation Mode**, it translates and speaks the result.  
+     - In **Assistant Mode**, it **does nothing yet** (AI placeholder).  
+   - *Every button press is read aloud.*  
+
+✅ **Motion Sensor (PIR):** Greets the user when they approach.  
+
+✅ **Timeout & Silence Detection:**  
+   - Auto-processes input **after 5 seconds of silence**.  
+   - Stops listening **after 10 seconds of inactivity**.  
+
+✅ **Online Mode (If Internet is Available):**  
+   - Switches to **Google STT & Translate** for better accuracy.  
+
+### **Not Yet Implemented (Future Purpose):**  
+❌ **AI Assistant Responses** (Rhasspy + GPT-4All) – The framework is ready, but no AI functionality yet.
+
+### **Final Setup:**  
+✅ **Full Translation & TTS functionality is working.**  
+✅ **AI Assistant framework is in place but inactive.**  
+✅ **Future-ready for AI features when needed.**  
